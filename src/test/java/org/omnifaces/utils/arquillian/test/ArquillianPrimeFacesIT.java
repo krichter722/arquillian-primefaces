@@ -52,6 +52,7 @@ public class ArquillianPrimeFacesIT {
 
 		return create(WebArchive.class)
 			.addClass(ArquillianPrimeFacesITBean.class)
+			.addClass(MyEntityConverter.class)
 			.addAsLibrary(create(MavenImporter.class).loadPomFromFile("pom.xml").importBuildOutput().as(JavaArchive.class))
 			.addAsLibraries(Maven.resolver().resolve("org.primefaces:primefaces:" + getProperty("test.primefaces.version")).withTransitivity().asFile())
 			.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -95,6 +96,9 @@ public class ArquillianPrimeFacesIT {
 
 	@FindBy(id="form:autoComplete")
 	private WebElement autoComplete;
+
+	@FindBy(id="form:autoCompleteConverter")
+	private WebElement autoCompleteConverter;
 
 	@FindBy(id="form:selectOneMenu")
 	private WebElement selectOneMenu;
@@ -278,6 +282,8 @@ public class ArquillianPrimeFacesIT {
 		ArquillianPrimeFaces.setSliderValue(slider, 3);
 		String autoCompleteLabel = ArquillianPrimeFaces.setAutoCompleteValue(autoComplete, "query", "Value 1");
 		Assert.assertEquals("Value 1", autoCompleteLabel);
+		String autoCompleteConverterLabel = ArquillianPrimeFaces.setAutoCompleteValue(autoCompleteConverter, "query", MyEntityConverter.ONLY_ENTITY0_PROPERTY0);
+		Assert.assertEquals(MyEntityConverter.ONLY_ENTITY0_PROPERTY0, autoCompleteConverterLabel);
 		String selectOneMenuLabel = ArquillianPrimeFaces.setSelectOneMenuValue(selectOneMenu, "Value 2");
 		Assert.assertEquals("Label 2", selectOneMenuLabel);
 		String selectOneRadioLabel = ArquillianPrimeFaces.setSelectOneRadioValue(selectOneRadio, "Value 3");

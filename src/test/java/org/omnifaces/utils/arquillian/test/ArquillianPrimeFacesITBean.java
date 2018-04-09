@@ -14,6 +14,7 @@ package org.omnifaces.utils.arquillian.test;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.inject.Named;
 
 @Named
@@ -33,11 +35,13 @@ public class ArquillianPrimeFacesITBean {
 	private Integer spinner;
 	private Integer slider;
 	private String autoComplete;
+	private MyEntity autoCompleteEntity;
 	private String selectOneMenu;
 	private String selectOneRadio;
 	private String selectOneButton;
 	private boolean selectBooleanCheckbox;
 	private Map<String, String> selectItems;
+	private Converter<MyEntity> entityConverter = new MyEntityConverter();
 
 	@PostConstruct
 	public void init() {
@@ -50,6 +54,10 @@ public class ArquillianPrimeFacesITBean {
 
 	public List<String> completeMethod(String query) {
 		return new ArrayList<>(selectItems.values());
+	}
+
+	public List<String> completeMethodConverter(String query) {
+		return new ArrayList<>(Arrays.asList(MyEntityConverter.ONLY_ENTITY0_PROPERTY0));
 	}
 
 	public void commandButton() {
@@ -134,6 +142,14 @@ public class ArquillianPrimeFacesITBean {
 		this.autoComplete = autoComplete;
 	}
 
+	public MyEntity getAutoCompleteEntity() {
+		return autoCompleteEntity;
+	}
+
+	public void setAutoCompleteEntity(MyEntity autoCompleteEntity) {
+		this.autoCompleteEntity = autoCompleteEntity;
+	}
+
 	public String getSelectOneMenu() {
 		return selectOneMenu;
 	}
@@ -170,5 +186,11 @@ public class ArquillianPrimeFacesITBean {
 		this.selectBooleanCheckbox = selectBooleanCheckbox;
 	}
 
+	public Converter<MyEntity> getEntityConverter() {
+		return entityConverter;
+	}
 
+	public void setEntityConverter(Converter<MyEntity> entityConverter) {
+		this.entityConverter = entityConverter;
+	}
 }

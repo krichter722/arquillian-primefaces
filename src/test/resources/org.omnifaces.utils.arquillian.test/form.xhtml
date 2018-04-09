@@ -38,6 +38,12 @@
 		</p:autoComplete>
 		<p:message id="autoCompleteMessage" for="autoComplete" />
 
+		<p:autoComplete id="autoCompleteConverter" value="#{arquillianPrimeFacesITBean.autoCompleteEntity}"  required="true"
+			completeMethod="#{arquillianPrimeFacesITBean.completeMethodConverter}"
+			converter="#{arquillianPrimeFacesITBean.entityConverter}">
+		</p:autoComplete>
+		<p:message id="autoCompleteConverterMessage" for="autoCompleteConverter" />
+
 		<p:selectOneMenu id="selectOneMenu" value="#{arquillianPrimeFacesITBean.selectOneMenu}" required="true">
 			<f:selectItems value="#{arquillianPrimeFacesITBean.selectItems}" />
 		</p:selectOneMenu>
